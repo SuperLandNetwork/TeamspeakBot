@@ -26,24 +26,25 @@
  *
  */
 
-package de.superlandnetwork.teamspeak.bot;
+package de.superlandnetwork.teamspeak.bot.utils;
 
-public enum GroupsEnum {
+import java.io.IOException;
+import java.util.Properties;
 
-    TEAM(71),
-    USER_VERIFY(82),
-    EXTRAS_RUHE(99),
-    EXTRAS_POKE(100),
-    EXTRAS_MSG(101),
-    EXTRAS_BOT(102);
+public class Config {
+    Properties settingsProps;
 
-    private int id;
+    public Config() {
+        settingsProps = new Properties();
 
-    GroupsEnum(int id) {
-        this.id = id;
+        try {
+            settingsProps.load(Config.class.getClassLoader().getResourceAsStream("settings.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public int getId() {
-        return id;
+    public Properties getSettingsProps() {
+        return settingsProps;
     }
 }
