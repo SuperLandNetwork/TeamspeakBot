@@ -278,6 +278,19 @@ public class Main {
                         return;
                     }
 
+                    try {
+                        String sql = "SELECT `id` FROM `sln_ts_users` WHERE `uid` = '" + e.getUniqueClientIdentifier() + "'";
+                        if (Main.mySQL.getResult(sql).next()) {
+                            String sql2 = "UPDATE `sln_ts_users` SET `last_name`='"+e.getClientNickname()+"' WHERE `uid`='" + e.getUniqueClientIdentifier() + "'";
+                            Main.mySQL.update(sql2);
+                        } else {
+                            String sql2 = "INSERT INTO `sln_ts_users` (`uid`, `last_name`) VALUES ('" + e.getUniqueClientIdentifier() + "', '" + e.getClientNickname() + "')";
+                            Main.mySQL.update(sql2);
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+
                     api.getClientInfo(id).onSuccess(clientInfo -> {
                         if (!clientInfo.isInServerGroup(GroupsEnum.EXTRAS_BOT.getId())) {
                             api.sendPrivateMessage(id, "\n"
