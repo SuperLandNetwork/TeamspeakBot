@@ -305,6 +305,7 @@ public class Main {
                                     + "\n"
                                     + "»------------------------[Color=grey]=======[/color][Color=skyblue][[/color][b]» Bot «[/b][Color=skyblue]][/color][Color=grey]=======[/color]------------------------«");
                             log.info("User Joined.");
+                            checkUserRoles(api, clientInfo);
                         }
                     });
                 }
