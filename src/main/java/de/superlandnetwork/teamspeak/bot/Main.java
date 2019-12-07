@@ -73,7 +73,7 @@ public class Main {
         final TS3Config config = new TS3Config();
         config.setHost("ts.superlandnetwork.de");
         config.setEnableCommunicationsLogging(true);
-        config.setFloodRate(TS3Query.FloodRate.DEFAULT);
+        config.setFloodRate(TS3Query.FloodRate.UNLIMITED);
         config.setReconnectStrategy(ReconnectStrategy.exponentialBackoff());
 
         config.setConnectionHandler(new ConnectionHandler() {
