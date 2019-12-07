@@ -38,9 +38,9 @@ import com.github.theholywaffle.teamspeak3.api.reconnect.ConnectionHandler;
 import com.github.theholywaffle.teamspeak3.api.reconnect.ReconnectStrategy;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
+import de.superlandnetwork.lib.database.MySQL;
 import de.superlandnetwork.teamspeak.bot.utils.Config;
 import de.superlandnetwork.teamspeak.bot.utils.GroupsEnum;
-import de.superlandnetwork.teamspeak.bot.utils.MySQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,10 +51,8 @@ import java.util.*;
 public class Main {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
-    private static volatile int clientId;
-
     public static MySQL mySQL;
-
+    private static volatile int clientId;
     private static String username, password;
 
     public static void main(String[] args) {
@@ -281,7 +279,7 @@ public class Main {
                     try {
                         String sql = "SELECT `id` FROM `sln_ts_users` WHERE `uid` = '" + e.getUniqueClientIdentifier() + "'";
                         if (Main.mySQL.getResult(sql).next()) {
-                            String sql2 = "UPDATE `sln_ts_users` SET `last_name`='"+e.getClientNickname()+"' WHERE `uid`='" + e.getUniqueClientIdentifier() + "'";
+                            String sql2 = "UPDATE `sln_ts_users` SET `last_name`='" + e.getClientNickname() + "' WHERE `uid`='" + e.getUniqueClientIdentifier() + "'";
                             Main.mySQL.update(sql2);
                         } else {
                             String sql2 = "INSERT INTO `sln_ts_users` (`uid`, `last_name`) VALUES ('" + e.getUniqueClientIdentifier() + "', '" + e.getClientNickname() + "')";
@@ -370,7 +368,7 @@ public class Main {
                     mySQL.update(sql2);
                     api.addClientToServerGroup(GroupsEnum.VERIFY.getId(), clientInfo.getDatabaseId());
                     checkUserRoles(api, clientInfo);
-                    api.sendPrivateMessage(clientInfo.getId(),"Deine Identität wurde bestätigt");
+                    api.sendPrivateMessage(clientInfo.getId(), "Deine Identität wurde bestätigt");
                 } else
                     api.sendPrivateMessage(clientInfo.getId(), "Falscher Minecraft-Name!");
             }
